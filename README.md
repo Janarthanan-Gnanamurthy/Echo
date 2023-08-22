@@ -1,5 +1,5 @@
 # Echo
-## 1.Upload the video
+## 1. Upload the video
 
 ## 2. First Clone-Voice
 
