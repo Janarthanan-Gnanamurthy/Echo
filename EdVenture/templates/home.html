@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Echo</title>
+</head>
+<body>
+    <header class="bg-blue-600 text-white text-2xl p-3"> Header </header>
+    <div class="flex items-center border flex-col rounded border-blue-600 m-10 p-3 ">
+        <div class=" border-blue-600 bg-blue-600 rounded w-full max-w-screen-md p-10 pt-0 ">
+            <h1 class="text-2xl text-white text-center p-3">Uploaded Video</h1>
+            <video class="col-span-2 w-full rounded mb-10" controls>
+                <source src="{{video_path}}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="grid grid-cols-2 grid-rows-4 gap-x-10 gap-y-4">
+                <div class="grid bg-white text-center text-2xl font-bold row-span-2 p-3 mb-3 rounded-lg place-content-center
+                hover:cursor-pointer
+                active:opacity-75" id="div_1" onclick="voice_clone(1)">
+                <div class="flex">Voice-Clone
+                <span id="load_1" class="ml-2 hidden animate-spin">
+                    <!-- Loading spinner (tailwind class) -->
+                    &#9696;
+                </span></div>
+                <p class="text-sm text-center font-semibold mt-2" id="response"></p></div>
+                <div class="grid place-content-center bg-white text-2xl font-bold p-3 rounded-lg hover:cursor-pointer active:opacity-75" id="div_2" onclick="audio()"><div>Extract Audio
+                    <span id="load_2" class="ml-2 hidden animate-spin">
+                        <!-- Loading spinner (tailwind class) -->
+                        &#9696;
+                    </span>
+                </div></div>
+                <div class="grid place-content-center bg-white text-2xl font-bold p-3 mb-3 rounded-lg mb-3 hover:cursor-pointer active:opacity-75" 
+                onclick="document.getElementById('myModal').classList.remove('hidden')" id="div_3"><div class="flex">Text-To-Speech
+                    <span id="load_3" class="ml-2 hidden animate-spin">
+                        <!-- Loading spinner (tailwind class) -->
+                        &#9696;
+                    </span>
+                    <p class="text-sm font-semibold" id="response3"></p>
+                    
+                </div></div>
+                <div class="grid place-content-center bg-white text-2xl font-bold p-3 rounded-lg hover:cursor-pointer mb-3" onclick="del_voice(4, voice_id)" id="div_4"><div class="flex">Delete Voice-Clone
+                    <span id="load_4" class="ml-2 hidden animate-spin h-min">
+                        <!-- Loading spinner (tailwind class) -->
+                        &#9696;
+                    </span></div>
+                    <p class="text-sm font-semibold" id="response4"></p>
+                </div>
+                <div class="grid place-content-center text-2xl  font-bold border-2 border-slate-950 row-span-2 p-3 rounded-lg  bg-white 
+                hover:bg-gradient-to-r
+                hover:cursor-pointer
+                hover:text-white hover:from-green-400 hover:to-blue-500" id="div_5" onclick="whisper()">
+                <div class="flex">AI-Dubbing
+                <span id="load_5" class="ml-2 hidden animate-spin">
+                    <!-- Loading spinner (tailwind class) -->
+                    &#9696;
+                </span></div></div>
+                <div class="grid place-content-center hidden bg-white text-2xl font-bold p-3 rounded-lg overflow-x-auto" id="div_6" ><div>
+                    <audio id="myAudio" controls>
+                        <source src="../static/tts/{{name}}.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div></div>
+            </div>
+            <div id="myModal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
+            >
+                <div class="bg-white p-6 w-1/3 rounded-lg">
+                  <h2 class="text-2xl font-semibold mb-4">Text-To_speech</h2>
+                  <div class="grid grid-rows-4 gap-4">
+                    <label for="name" class="text-lg">Text:</label>
+                    <input type="text" id="tts" name="tts" class="row-span-2 border border-slate-950 w-full h-full px-3 py-2 mb-4 rounded">
+                    
+                    <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" onclick="tts()">
+                    <div class="flex justify-center">
+                        Submit
+                        <span id="modal-spinner" class="ml-2 hidden animate-spin">
+                        <!-- Loading spinner (tailwind class) -->
+                        &#9696;
+                    </span></div></div>
+                    </div>
+                  </form>
+                </div>
+            </div>
+            <div id="videoModal" class="modal hidden  fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center h-screen"
+              >
+                <div class="bg-white p-6 rounded-lg ">
+                    <div class="flex justify-between">
+                    <h2 class="text-2xl font-semibold mb-4">Text-To_speech</h2>
+                    <button id="closeModal" class=" text-gray-600 hover:text-red-500 mb-4"
+                    onclick="document.getElementById('videoModal').classList.add('hidden')">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    </div>
+                    <video class="col-span-2 rounded mb-3 border border-blue-600 " controls>
+                        <source src="../static/output/{{name}}.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="flex justify-center">
+                        <button
+                        class="outline outline-offset-2 outline-green-600
+                        bg-green-600
+                        hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:bg-green-600  mt-3 "
+                        >
+                        Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let voice_id = ''
+        let count = 0
+        async function voice_clone(num) {
+            const select_div = document.getElementById(`div_${num}`)
+            const loader = document.getElementById(`load_${num}`)
+
+            select_div.classList.add('pointer-events-none');
+            loader.classList.remove('hidden')
+
+            try {
+                const response = await fetch('/clone-voice/dummy/{{name}}', {method: 'POST'});
+                
+                if (response.ok) {
+                    voice_id = await response.json()
+                    console.log(voice_id)
+                    document.getElementById('response').innerText = '<Voice-clone generated>'
+                }else{
+                    console.log('fetching error')
+                    alert('fetching Error')
+                }
+            }catch (error){
+                alert('something went wrong');
+            }finally {
+                loader.classList.add('hidden');
+            }
+        }
+        async function del_voice(num, voice_id) {
+            const select_div = document.getElementById(`div_${num}`)
+            const loader = document.getElementById(`load_${num}`)
+
+            select_div.classList.add('pointer-events-none');
+            loader.classList.remove('hidden')
+
+            try {
+                const response = await fetch('/del-voice', {method: 'POST', body: JSON.stringify(voice_id)});
+                
+                if (response.ok) {
+                    const message = await response.json();
+                    console.log(message)
+                    document.getElementById('response4').innerText=message
+                }else{
+                    console.log('fetching error')
+                }
+
+            }catch (error){
+                alert('something went wrong');
+            }finally {
+                loader.classList.add('hidden');
+            }
+        }
+        async function tts(){
+            count++;
+            const modal = document.getElementById('myModal')
+            const loader = document.getElementById('modal-spinner')
+            loader.classList.remove('hidden')
+            const text_ts= document.getElementById('tts').value;
+            console.log(text_ts)
+
+            const obj = {name : `{{name}}_t${count}`, text: text_ts, id: voice_id}
+
+            try {
+                const response = await fetch('/tts/api', {method: 'POST', body: JSON.stringify(obj)});
+                
+                if (response.ok) {
+                    const message = await response.json();
+                    console.log(message)
+
+                    const audiotag=document.getElementById('myAudio');
+                    
+                    audiotag.src = `../static/tts/{{name}}_t${count}.mp3`
+                    audiotag.load();
+                    audiotag.play();
+                }else{
+                    console.log('fetching error')
+                }
+
+            }catch (error){
+                alert('something went wrong');
+            }finally {
+                modal.classList.add('hidden')
+                loader.classList.add('hidden')
+                document.getElementById('div_6').classList.remove('hidden')
+            }
+        }
+        async function audio(){
+            const audioUrl = '../static/audio/{{name}}.mp3';
+            const audioName = 'Echo_v1.mp3';
+            const anchor = document.createElement('a');
+
+            anchor.href = audioUrl;
+            anchor.download = audioName;
+            anchor.click();
+        }
+        async function whisper(){
+            const select_div = document.getElementById('div_5')
+            const loader = document.getElementById('load_5')
+            select_div.classList.add('bg-gradient-to-r','from-green-400','to-blue-500','text-white')
+            select_div.classList.remove('bg-white','hover:bg-gradient-to-r')
+            loader.classList.remove('hidden')
+
+            obj = {id: voice_id, name:'{{name}}'}
+
+            try {
+                const response = await fetch('/whisper', {method: 'POST', body: JSON.stringify(obj)});
+                
+                if (response.ok) {
+                    const message = await response.json();
+                    console.log(message)
+                }else{
+                    console.log('fetching error')
+                }
+
+            }catch (error){
+                alert('something went wrong');
+            }finally {
+                loader.classList.add('hidden');
+                document.getElementById('videoModal').classList.remove('hidden')
+            }
+        }
+    </script>
+</body>
+</html>
