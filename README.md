@@ -1,7 +1,7 @@
 # Echo
 ## upload the video
 
-## First clone-Vide
+## First Clone-Voice
 
 test your cloned voice using text-to-speech !
 
