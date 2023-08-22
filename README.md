@@ -1,12 +1,12 @@
 # Echo
-##upload the video
+## upload the video
 
-##First clone-Vide
+## First clone-Vide
 
-test your cloned voice using text-to-speech!
+test your cloned voice using text-to-speech !
 
-##Then use AI-Dubbing
+## Then use AI-Dubbing
 
-To witness something epic!
+To witness something epic !
 
-##Don't forget to delete the cloned-voice 
+## Don't forget to delete the cloned-voice 
